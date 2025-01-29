@@ -10,10 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy to Cloudflare 
     steps:
-      -uses: actions/checkout@v4
+      -name: Install Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+      -name: Install Wrangler
+       run: npm install -g wrangler
       -name: Deploy to Cloudflare Workers with Wrangler
        uses: cloudflare/wrangler-action@v3.13.1
-       with:
+       run: wrangler deploy
+        with:
          # Your Cloudflare API Token
          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
          # Your Cloudflare Account ID
